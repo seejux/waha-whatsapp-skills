@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "waha-whatsapp-skills",
+  "description": "Claude Code skills for the WAHA WhatsApp HTTP API — direct curl-based tools to minimize token usage",
+  "owner": {
+    "name": "seejux"
+  },
+  "plugins": [
+    {
+      "name": "waha-skills",
+      "description": "Skills for interacting with the WAHA WhatsApp HTTP API via direct curl calls instead of MCP tools. Covers messages, chats, groups, contacts, and presence.",
+      "source": "./plugins/waha-skills",
+      "category": "productivity",
+      "homepage": "https://github.com/seejux/waha-whatsapp-skills"
+    }
+  ]
+}
