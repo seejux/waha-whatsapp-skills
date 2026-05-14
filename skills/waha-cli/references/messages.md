@@ -4,7 +4,7 @@
 
 All WAMessage objects contain a `_data` field with 100+ raw WebJS internal fields. grep on `id`, `from`, `to` will return duplicates from `_data`. `body` is safe to grep (only at root). For any field that also appears in `_data`, use node.
 
-All `/api/sendX` endpoints require `"session": "$WAHA_SESSION"` in the request body.
+All `/api/sendX` endpoints require `"session"` in the request body — use `$WAHA_SESSION`.
 
 All send operations return a WAMessage: `{id, timestamp, from, fromMe, source, to, participant, body, hasMedia, mediaUrl, ack, ackName, media{url,mimetype,filename}, location{latitude,longitude,live,name,address}, vCards[], replyTo{id,participant,body}, _data{}}`
 
@@ -22,7 +22,7 @@ All send operations return a WAMessage: `{id, timestamp, from, fromMe, source, t
 
 ```bash
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"chatId\":\"1234567890@c.us\",\"text\":\"Hello!\",\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"chatId":"1234567890@c.us","text":"Hello!","session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/sendText"
 ```
 
@@ -35,12 +35,12 @@ Optional body fields: `"reply_to":"msgId"`, `"linkPreview":true`, `"linkPreviewH
 ```bash
 # From URL
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"chatId\":\"1234567890@c.us\",\"file\":{\"url\":\"https://...\",\"mimetype\":\"image/jpeg\"},\"caption\":\"optional\",\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"chatId":"1234567890@c.us","file":{"url":"https://...","mimetype":"image/jpeg"},"caption":"optional","session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/sendImage"
 
 # From base64
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"chatId\":\"1234567890@c.us\",\"file\":{\"data\":\"base64==\",\"mimetype\":\"image/jpeg\",\"filename\":\"photo.jpg\"},\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"chatId":"1234567890@c.us","file":{"data":"base64==","mimetype":"image/jpeg","filename":"photo.jpg"},"session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/sendImage"
 ```
 
@@ -50,7 +50,7 @@ curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
 
 ```bash
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"chatId\":\"1234567890@c.us\",\"file\":{\"url\":\"https://...\",\"mimetype\":\"application/pdf\",\"filename\":\"doc.pdf\"},\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"chatId":"1234567890@c.us","file":{"url":"https://...","mimetype":"application/pdf","filename":"doc.pdf"},"session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/sendFile"
 ```
 
@@ -60,7 +60,7 @@ curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
 
 ```bash
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"chatId\":\"1234567890@c.us\",\"file\":{\"url\":\"https://...\",\"mimetype\":\"video/mp4\"},\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"chatId":"1234567890@c.us","file":{"url":"https://...","mimetype":"video/mp4"},"session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/sendVideo"
 ```
 
@@ -70,7 +70,7 @@ curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
 
 ```bash
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"chatId\":\"1234567890@c.us\",\"file\":{\"url\":\"https://...\",\"mimetype\":\"audio/ogg\"},\"convert\":true,\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"chatId":"1234567890@c.us","file":{"url":"https://...","mimetype":"audio/ogg"},"convert":true,"session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/sendVoice"
 ```
 
@@ -82,7 +82,7 @@ curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
 
 ```bash
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"chatId\":\"1234567890@c.us\",\"latitude\":40.7128,\"longitude\":-74.006,\"title\":\"New York\",\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"chatId":"1234567890@c.us","latitude":40.7128,"longitude":-74.006,"title":"New York","session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/sendLocation"
 ```
 
@@ -92,7 +92,7 @@ curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
 
 ```bash
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"chatId\":\"1234567890@c.us\",\"contacts\":[{\"vcard\":\"BEGIN:VCARD\\nVERSION:3.0\\nFN:Jane Doe\\nTEL:+1234567890\\nEND:VCARD\"}],\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"chatId":"1234567890@c.us","contacts":[{"vcard":"BEGIN:VCARD\nVERSION:3.0\nFN:Jane Doe\nTEL:+1234567890\nEND:VCARD"}],"session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/sendContactVcard"
 ```
 
@@ -146,7 +146,7 @@ curl -s -X POST -H "X-Api-Key: $WAHA_KEY" \
 
 ```bash
 curl -s -X PUT -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"messageId\":\"{messageId}\",\"reaction\":\"👍\",\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"messageId":"{messageId}","reaction":"👍","session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/reaction"
 ```
 
@@ -158,7 +158,7 @@ Use `"reaction":""` to remove.
 
 ```bash
 curl -s -X PUT -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"messageId\":\"{messageId}\",\"chatId\":\"{chatId}\",\"star\":true,\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"messageId":"{messageId}","chatId":"{chatId}","star":true,"session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/star"
 ```
 

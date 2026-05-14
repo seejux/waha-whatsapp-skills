@@ -21,11 +21,12 @@ Critical issues:
 
 ```bash
 curl -s -H "X-Api-Key: $WAHA_KEY" \
-  "$WAHA_URL/api/$WAHA_SESSION/groups?limit=100&sortBy=id&sortOrder=asc&exclude=participants" \
+  "$WAHA_URL/api/$WAHA_SESSION/groups?limit={limit}&sortBy=id&sortOrder=asc&exclude=participants" \
   > /tmp/waha.json
 ```
 
-Optional params: `sortBy=id|name`, `sortOrder=asc|desc`, `limit=100`, `offset=0`, `exclude=participants`
+Params: `limit` (how many groups), `offset` (pagination), `sortBy=id|name`, `sortOrder=asc|desc`, `exclude=participants` (omit participant list for faster response).
+Use a high limit (200+) for full group list; smaller (20-50) if just browsing.
 
 ```bash
 # Clean: group IDs and names (id._serialized is the string form)

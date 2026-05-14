@@ -44,10 +44,11 @@ grep -o '"isBusiness":[a-z]*' /tmp/waha.json
 
 ```bash
 curl -s -H "X-Api-Key: $WAHA_KEY" \
-  "$WAHA_URL/api/contacts/all?session=$WAHA_SESSION&limit=100&sortBy=name&sortOrder=asc" > /tmp/waha.json
+  "$WAHA_URL/api/contacts/all?session=$WAHA_SESSION&limit={limit}&sortBy=name&sortOrder=asc" > /tmp/waha.json
 ```
 
-Optional params: `sortBy=id|name`, `sortOrder=asc|desc`, `limit=100`, `offset=0`
+Params: `limit` (how many contacts), `offset` (pagination), `sortBy=id|name`, `sortOrder=asc|desc`.
+Use a high limit (200+) if you need the full contact list; use a smaller limit (20-50) if just browsing.
 
 ```bash
 # Clean: list all contacts with ID and display name
@@ -97,7 +98,7 @@ curl -s -H "X-Api-Key: $WAHA_KEY" \
 
 ```bash
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"contactId\":\"1234567890@c.us\",\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"contactId":"1234567890@c.us","session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/contacts/block"
 ```
 
@@ -107,7 +108,7 @@ Response: HTTP 200 (empty body)
 
 ```bash
 curl -s -X POST -H "X-Api-Key: $WAHA_KEY" -H "Content-Type: application/json" \
-  -d "{\"contactId\":\"1234567890@c.us\",\"session\":\"$WAHA_SESSION\"}" \
+  -d '{"contactId":"1234567890@c.us","session":"'"$WAHA_SESSION"'"}' \
   "$WAHA_URL/api/contacts/unblock"
 ```
 
