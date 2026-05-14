@@ -1,0 +1,7 @@
+{
+  "name": "waha-skills",
+  "description": "Skills for interacting with the WAHA WhatsApp HTTP API via direct curl calls instead of MCP tools, minimizing token usage.",
+  "author": {
+    "name": "seejux"
+  }
+}
